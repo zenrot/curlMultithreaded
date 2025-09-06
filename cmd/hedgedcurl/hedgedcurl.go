@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"hedgedcurl/internal/hedgedcurl"
+	"io"
 	"os"
 	"time"
 )
@@ -34,20 +35,19 @@ func main() {
 		flag.Usage()
 		return
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout*10000000000))
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
 	defer cancel()
 
 	args := flag.Args()
 
 	hedgedcurl.Start(args, ctx)
 
-	var result string
-
 	select {
-	case result = <-hedgedcurl.GetChan():
-		fmt.Println(result)
+	case result := <-hedgedcurl.GetChan():
+		wr := io.Writer(os.Stdout)
+		wr.Write([]byte(result))
 		return
 	case <-ctx.Done():
-		fmt.Println("228")
+		os.Exit(228)
 	}
 }
