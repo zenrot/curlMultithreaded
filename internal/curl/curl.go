@@ -1,6 +1,7 @@
 package curl
 
 import (
+	"crypto/tls"
 	"fmt"
 	"hedgedcurl/internal/parser"
 
@@ -15,6 +16,14 @@ func GetURL(URL string) (string, error) {
 		return "", err
 	}
 	var resp []byte
+
+	if parsedUrl.Scheme == "https" {
+		resp, err = GetURLHTTPS(parsedUrl)
+		if err != nil {
+			return "", err
+		}
+		return string(resp), nil
+	}
 
 	resp, err = GetURLHTTP(parsedUrl)
 	if err != nil {
@@ -35,15 +44,57 @@ func GetURLHTTP(url parser.ParsedURL) ([]byte, error) {
 	if url.RawQuery != "" {
 		fullPath += "?" + url.RawQuery
 	}
+	hostHeader := url.Host
+	if url.Port != "80" && url.Port != "" {
+		hostHeader = net.JoinHostPort(url.Host, url.Port)
+	}
 
 	request := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: hedgedcurl\r\nConnection: close\r\n\r\n",
-		fullPath, net.JoinHostPort(url.Host, url.Port))
+		fullPath, hostHeader)
 
 	_, err = conn.Write([]byte(request))
 	if err != nil {
 
 		return nil, err
 	}
+	res, err := io.ReadAll(conn)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func GetURLHTTPS(url parser.ParsedURL) ([]byte, error) {
+	// TLS-соединение (порт 443 по умолчанию)
+	conn, err := tls.Dial("tcp", net.JoinHostPort(url.Host, url.Port), &tls.Config{
+		ServerName: url.Host, // для проверки сертификата
+	})
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	fullPath := url.Path
+	if fullPath == "" {
+		fullPath = "/"
+	}
+	if url.RawQuery != "" {
+		fullPath += "?" + url.RawQuery
+	}
+
+	hostHeader := url.Host
+	if url.Port != "443" && url.Port != "" {
+		hostHeader = net.JoinHostPort(url.Host, url.Port)
+	}
+
+	request := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: hedgedcurl\r\nConnection: close\r\n\r\n",
+		fullPath, hostHeader)
+
+	_, err = conn.Write([]byte(request))
+	if err != nil {
+		return nil, err
+	}
+
 	res, err := io.ReadAll(conn)
 	if err != nil {
 		return nil, err

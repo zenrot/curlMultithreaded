@@ -1,6 +1,17 @@
 # Запустите это в отдельном терминале
-from http.server import HTTPServer, BaseHTTPRequestHandler
+import os
+import sys
+import time
+import subprocess
+import threading
+import signal
 import json
+import re
+from pathlib import Path
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from socketserver import ThreadingMixIn
+from urllib.parse import urlparse, parse_qs
+
 
 class TestHandler(BaseHTTPRequestHandler):
     def do_GET(self):

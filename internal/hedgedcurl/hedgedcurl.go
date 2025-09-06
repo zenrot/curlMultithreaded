@@ -27,7 +27,7 @@ func worker(strUrl string) {
 	if err != nil {
 		return
 	}
-	if strings.HasPrefix(res, "HTTP/1.0 20") {
+	if strings.HasPrefix(res, "HTTP/1.0 20") || strings.HasPrefix(res, "HTTP/1.1 20") {
 		ch <- res
 	}
 
