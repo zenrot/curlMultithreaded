@@ -41,6 +41,9 @@ func GetURLHTTP(url parser.ParsedURL) ([]byte, error) {
 	defer conn.Close()
 
 	fullPath := url.Path
+	if fullPath == "" {
+		fullPath = "/"
+	}
 	if url.RawQuery != "" {
 		fullPath += "?" + url.RawQuery
 	}
@@ -49,7 +52,13 @@ func GetURLHTTP(url parser.ParsedURL) ([]byte, error) {
 		hostHeader = net.JoinHostPort(url.Host, url.Port)
 	}
 
-	request := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: hedgedcurl\r\nConnection: close\r\n\r\n",
+	request := fmt.Sprintf(
+		"GET %s HTTP/1.1\r\n"+
+			"Host: %s\r\n"+
+			"User-Agent: hedgedcurl\r\n"+
+			"Accept: */*\r\n"+
+			"Accept-Encoding: identity\r\n"+
+			"Connection: close\r\n\r\n",
 		fullPath, hostHeader)
 
 	_, err = conn.Write([]byte(request))
@@ -65,7 +74,6 @@ func GetURLHTTP(url parser.ParsedURL) ([]byte, error) {
 }
 
 func GetURLHTTPS(url parser.ParsedURL) ([]byte, error) {
-	// TLS-соединение (порт 443 по умолчанию)
 	conn, err := tls.Dial("tcp", net.JoinHostPort(url.Host, url.Port), &tls.Config{
 		ServerName: url.Host, // для проверки сертификата
 	})
@@ -87,7 +95,13 @@ func GetURLHTTPS(url parser.ParsedURL) ([]byte, error) {
 		hostHeader = net.JoinHostPort(url.Host, url.Port)
 	}
 
-	request := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: hedgedcurl\r\nConnection: close\r\n\r\n",
+	request := fmt.Sprintf(
+		"GET %s HTTP/1.1\r\n"+
+			"Host: %s\r\n"+
+			"User-Agent: hedgedcurl\r\n"+
+			"Accept: */*\r\n"+
+			"Accept-Encoding: identity\r\n"+
+			"Connection: close\r\n\r\n",
 		fullPath, hostHeader)
 
 	_, err = conn.Write([]byte(request))
