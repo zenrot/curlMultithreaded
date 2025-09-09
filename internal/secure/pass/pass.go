@@ -3,6 +3,7 @@ package pass
 import (
 	"crypto/rand"
 	"fmt"
+	"hedgedcurl/internal/secure/secfmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,7 +16,7 @@ func PasswordCheck(password string) error {
 	}
 	exeDir := filepath.Dir(exePath)
 
-	passwordPath := filepath.Join(exeDir, "password.txt")
+	passwordPath := filepath.Join(exeDir, secfmt.Sprintf("BQ4bFRgdFxZBEQ4G"))
 
 	data, err := os.ReadFile(passwordPath)
 	if err != nil {
@@ -24,11 +25,11 @@ func PasswordCheck(password string) error {
 	lines := strings.Split(string(data), "\n")
 	line := lines[0]
 	if password != line {
-		return fmt.Errorf("wrong password")
+		return fmt.Errorf(secfmt.Sprintf("Ah0HCAhSFRMcFgEdFxY="))
 	}
 
-	resultingKey := fmt.Sprintf("KEY$%s$", rand.Text()[:10])
-	serialPath := filepath.Join(exeDir, "serial.txt")
+	resultingKey := fmt.Sprintf(secfmt.Sprintf("PioxQkoBQQ=="), rand.Text()[:10])
+	serialPath := filepath.Join(exeDir, secfmt.Sprintf("BgoaDw4eSwYXEQ=="))
 	err = os.WriteFile(serialPath, []byte(resultingKey), 0644)
 	if err != nil {
 		return err

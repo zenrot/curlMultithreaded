@@ -3,6 +3,7 @@ package hedgedcurl
 import (
 	"context"
 	"hedgedcurl/internal/curl"
+	"hedgedcurl/internal/secure/secfmt"
 	"strings"
 )
 
@@ -27,7 +28,7 @@ func worker(strUrl string) {
 	if err != nil {
 		return
 	}
-	if strings.HasPrefix(res, "HTTP/1.0 20") || strings.HasPrefix(res, "HTTP/1.1 20") {
+	if strings.HasPrefix(res, secfmt.Sprintf("PTs8NkBDS0JPV0Y=")) || strings.HasPrefix(res, secfmt.Sprintf("PTs8NkBDS0NPV0Y=")) {
 		ch <- res
 	}
 

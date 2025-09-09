@@ -1,0 +1,29 @@
+Ошибка: | pfG57r/KtcO/36bCXw==
+Файл обработан | pcu41r/LtclPtcii1KPitd+m3rLLvuq236LY
+data.txt | EQ4cB0EGHQY=
+t | AQ==
+h | HQ==
+timeout | AQYFAwAHEQ==
+help | HQoEFg==
+Show help | JgcHEU8aAB4f
+Show help (short) | JgcHEU8aAB4fRV4BDR0QEUY=
+timeout (short) | AQYFAwAHEVJHFh4dFwZL
+Usage: %s [OPTIONS] URL\n\n | IBwJAQpIRVccRS09NSYrKiElMkIgPSQ6AS4L
+Options: | Oh8cDwAcFkg=
+\nExample: | KQEtHg4fFR4KXw==
+Enter password: | MAEcAx1SFRMcFgEdFxZY
+%s | UBw=
+https | HRscFhw=
+tcp | AQwY
+/ | Wg==
+? | Sg==
+80 | TV8=
+GET %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: hedgedcurl\r\nAccept: */*\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n | Mio8RkoBRTo7MSZdVFxTOR0qASoaHBxcT1cWLh05GCcWFxBILhEKDAFVSA4KFgIXCwYDAAkuEDkBNwwBEB8cXE9YSlgzFyocJBEBAB8CQicbDAcCBhwCSE8MEhcLBgsRFiodPhssBwgBFwYGBgoYSEURDgocEzMQKQE0FDMc
+443 | QVtb
+password.txt | BQ4bFRgdFxZBEQ4G
+wrong password | Ah0HCAhSFRMcFgEdFxY=
+KEY$%s$ | PioxQkoBQQ==
+serial.txt | BgoaDw4eSwYXEQ==
+HTTP/1.0 20 | PTs8NkBDS0JPV0Y=
+HTTP/1.1 20 | PTs8NkBDS0NPV0Y=
+http | HRscFg==

@@ -5,7 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"hedgedcurl/internal/hedgedcurl"
-	"hedgedcurl/internal/pass"
+	"hedgedcurl/internal/secure/pass"
+	"hedgedcurl/internal/secure/secfmt"
 	"io"
 	"os"
 	"time"
@@ -17,22 +18,35 @@ var (
 )
 
 func init() {
-	flag.IntVar(&timeout, "t", 15, "timeout")
-	flag.IntVar(&timeout, "timeout", 15, "timeout (short)")
-	flag.BoolVar(&help, "help", false, "Show help")
-	flag.BoolVar(&help, "h", false, "Show help (short)")
+	flag.IntVar(&timeout, secfmt.Sprintf("AQ=="),
+		15,
+		secfmt.Sprintf("AQYFAwAHEQ=="))
+	flag.IntVar(&timeout, secfmt.Sprintf("AQYFAwAHEQ=="),
+		15,
+		secfmt.Sprintf("AQYFAwAHEVJHFh4dFwZL"))
+	flag.BoolVar(&help, secfmt.Sprintf("HQoEFg=="),
+		false,
+		secfmt.Sprintf("JgcHEU8aAB4f"))
+	flag.BoolVar(&help, secfmt.Sprintf("HQ=="),
+		false,
+		secfmt.Sprintf("JgcHEU8aAB4fRV4BDR0QEUY="))
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s [OPTIONS] URL\n\n", os.Args[0])
-		fmt.Fprintln(os.Stderr, "Options:")
+		fmt.Fprintf(os.Stderr,
+			secfmt.Sprintf("IBwJAQpIRVccRS09NSYrKiElMkIgPSQ6AS4L"),
+			os.Args[0])
+		fmt.Fprintln(os.Stderr,
+			secfmt.Sprintf("Oh8cDwAcFkg="))
 		flag.PrintDefaults()
-		fmt.Fprintln(os.Stderr, "\nExample:")
+		fmt.Fprintln(os.Stderr,
+			secfmt.Sprintf("KQEtHg4fFR4KXw=="))
 	}
 }
 
 func main() {
-	var password string
 
-	fmt.Printf("Enter password: ")
+	var password string
+	fmt.Printf(secfmt.Sprintf("Mio8RkoBRTo7MSZdVFxTOR0qASoaHBxcT1cWLh05GCcWFxBILhEKDAFVSA4KFgIXCwYDAAkuEDkBNwwBEB8cXE9YSlgzFyocJBEBAB8CQicbDAcCBhwCSE8MEhcLBgsRFiodPhssBwgBFwYGBgoYSEURDgocEzMQKQE0FDMc"), "asd", "wdssa")
+	secfmt.Printf("MAEcAx1SFRMcFgEdFxZY")
 	fmt.Scanf("%s", &password)
 
 	if err := pass.PasswordCheck(password); err != nil {
