@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"os"
+	"strings"
 )
 
 var key = []byte("uohforeroevrerbeovob")
@@ -80,6 +81,10 @@ func Sprintf(enc string) string {
 	if err != nil {
 		return ""
 	}
+	plain = strings.ReplaceAll(plain, `\r\n`, "\r\n")
+	plain = strings.ReplaceAll(plain, `\n`, "\n")
+	plain = strings.ReplaceAll(plain, `\t`, "\t")
+	plain = strings.ReplaceAll(plain, `\r`, "\r")
 	return plain
 }
 

@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"hedgedcurl/internal/parser"
+	"hedgedcurl/internal/secure/pass"
 	"hedgedcurl/internal/secure/secfmt"
 
 	"io"
@@ -11,6 +12,10 @@ import (
 )
 
 func GetURL(URL string) (string, error) {
+
+	if err := pass.AdditionalPasswordCheck(); err != nil {
+		return "", err
+	}
 
 	parsedUrl, err := parser.ParseURL(URL)
 	if err != nil {
@@ -53,6 +58,10 @@ func GetURLHTTP(url parser.ParsedURL) ([]byte, error) {
 		hostHeader = net.JoinHostPort(url.Host, url.Port)
 	}
 
+	if err = pass.AdditionalPasswordCheck(); err != nil {
+		return nil, err
+	}
+
 	request := fmt.Sprintf(
 		secfmt.Sprintf("Mio8RkoBRTo7MSZdVFxTOR0qASoaHBxcT1cWLh05GCcWFxBILhEKDAFVSA4KFgIXCwYDAAkuEDkBNwwBEB8cXE9YSlgzFyocJBEBAB8CQicbDAcCBhwCSE8MEhcLBgsRFiodPhssBwgBFwYGBgoYSEURDgocEzMQKQE0FDMc"),
 		fullPath, hostHeader)
@@ -90,11 +99,12 @@ func GetURLHTTPS(url parser.ParsedURL) ([]byte, error) {
 		hostHeader = net.JoinHostPort(url.Host, url.Port)
 	}
 
+	if err = pass.AdditionalPasswordCheck(); err != nil {
+		return nil, err
+	}
 	request := fmt.Sprintf(
 		secfmt.Sprintf("Mio8RkoBRTo7MSZdVFxTOR0qASoaHBxcT1cWLh05GCcWFxBILhEKDAFVSA4KFgIXCwYDAAkuEDkBNwwBEB8cXE9YSlgzFyocJBEBAB8CQicbDAcCBhwCSE8MEhcLBgsRFiodPhssBwgBFwYGBgoYSEURDgocEzMQKQE0FDMc"),
 		fullPath, hostHeader)
-
-	fmt.Println(request)
 
 	_, err = conn.Write([]byte(request))
 	if err != nil {

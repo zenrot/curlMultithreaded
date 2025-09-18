@@ -5,6 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"hedgedcurl/internal/hedgedcurl"
+	"hedgedcurl/internal/secure/antidbg"
+	"hedgedcurl/internal/secure/detectVm"
 	"hedgedcurl/internal/secure/pass"
 	"hedgedcurl/internal/secure/secfmt"
 	"io"
@@ -44,12 +46,18 @@ func init() {
 
 func main() {
 
+	junkCode()
+
+	detectVm.CheckVM()
+	antidbg.DebuggerSec()
+
+	pass.Sec()
+
 	var password string
-	fmt.Printf(secfmt.Sprintf("Mio8RkoBRTo7MSZdVFxTOR0qASoaHBxcT1cWLh05GCcWFxBILhEKDAFVSA4KFgIXCwYDAAkuEDkBNwwBEB8cXE9YSlgzFyocJBEBAB8CQicbDAcCBhwCSE8MEhcLBgsRFiodPhssBwgBFwYGBgoYSEURDgocEzMQKQE0FDMc"), "asd", "wdssa")
 	secfmt.Printf("MAEcAx1SFRMcFgEdFxZY")
 	fmt.Scanf("%s", &password)
 
-	if err := pass.PasswordCheck(password); err != nil {
+	if err := pass.FullPasswordCheck(password); err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
@@ -73,5 +81,16 @@ func main() {
 		return
 	case <-ctx.Done():
 		os.Exit(228)
+	}
+}
+
+func junkCode() {
+	x := 0
+	for i := 0; i < 10; i++ {
+		if i%3 == 0 {
+			_ = i * i
+		} else if i%5 == 0 {
+			_ = i + x
+		}
 	}
 }
