@@ -16,7 +16,7 @@ import (
 
 const lenfunc = 0x70
 
-const ethalonCRC = 2856034529
+const ethalonCRC = 2417069247
 
 var gl_pass string
 
