@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
-func PasswordCheck(password string) error {
+const password string = "asdasdasd"
+
+func PasswordCheck() error {
 	exePath, err := os.Executable()
 	if err != nil {
 		return err
@@ -26,7 +28,6 @@ func PasswordCheck(password string) error {
 	if password != line {
 		return fmt.Errorf("wrong password")
 	}
-
 	resultingKey := fmt.Sprintf("KEY$%s$", rand.Text()[:10])
 	serialPath := filepath.Join(exeDir, "serial.txt")
 	err = os.WriteFile(serialPath, []byte(resultingKey), 0644)

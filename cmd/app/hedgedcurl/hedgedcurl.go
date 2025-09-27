@@ -30,12 +30,8 @@ func init() {
 }
 
 func main() {
-	var password string
 
-	fmt.Printf("Enter password: ")
-	fmt.Scanf("%s", &password)
-
-	if err := pass.PasswordCheck(password); err != nil {
+	if err := pass.PasswordCheck(); err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
